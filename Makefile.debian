@@ -1,0 +1,24 @@
+CMAKE := /usr/bin/cmake
+CLANG := /usr/bin/clang-10
+LIBCLANG := /usr/lib/llvm-10/lib/libclang.so
+LIBLLVM := /usr/lib/llvm-10/lib/libLLVM.so
+LIBCLANG-CPP := /usr/lib/llvm-10/lib/libclang-cpp.so.10
+
+REQS := $(CMAKE) $(CLANG) $(LIBCLANG) $(LIBLLVM)
+
+build: build/bin/c2ffi
+
+clean:
+	rm -rf build
+
+build/bin/c2ffi: $(REQS) /usr/lib/llvm-10/lib/libclang-cpp.so
+	mkdir -p build && cd build && cmake ..
+	make -C build/
+
+/usr/lib/llvm-10/lib/libclang-cpp.so: $(LIBLANG-CPP)
+	sudo ln -s libclang-cpp.so.10 /usr/lib/llvm-10/lib/libclang-cpp.so
+
+$(REQS) $(LIBCLANG-CPP):
+	sudo apt install -y cmake clang-10 libclang-10-dev llvm-10-dev libclang-cpp10
+
+.PHONY: build clean

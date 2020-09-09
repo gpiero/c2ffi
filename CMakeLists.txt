@@ -36,6 +36,9 @@ target_include_directories(c2ffi PUBLIC
   ${LLVM_INCLUDE_DIRS}
   ${SOURCE_ROOT}/src/include
   )
+target_link_directories(c2ffi PUBLIC
+￼  ${LLVM_LIBRARY_DIRS}
+￼)
 target_link_libraries(c2ffi PUBLIC clang-cpp LLVM)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
